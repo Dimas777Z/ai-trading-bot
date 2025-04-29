@@ -40,7 +40,31 @@ def select_asset_category(message):
     user_data[message.chat.id] = {'category': message.text}
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     if message.text == "Валютные пары":
-        pairs = ["EUR/USD", "GBP/USD", "USD/JPY", "EUR/JPY", "AUD/USD"]
+       pairs = [
+    # Валютные пары
+    "EUR/USD", "GBP/USD", "USD/JPY", "EUR/JPY", "AUD/USD", "USD/CHF", "USD/CAD", "NZD/USD",
+
+    # Криптовалюты
+    "BTC/USD", "ETH/USD", "XRP/USD", "LTC/USD", "SOL/USD",
+
+    # Акции
+    "AAPL", "TSLA", "GOOGL", "MSFT", "AMZN",
+
+    # OTC Акции
+    "NSRGY", "BAYRY", "TCEHY", "SFTBY", "RYCEY",
+
+    # Индексы
+    "SPX", "NAS100", "DAX", "FTSE100", "NIKKEI225",
+
+    # OTC Индексы
+    "SP500_OTC", "DOW_OTC", "NASDAQ_OTC",
+
+    # Сырьё
+    "XAU/USD", "XAG/USD", "WTI", "BRENT", "NGAS",
+
+    # OTC Сырьё
+    "GOLD_OTC", "OIL_OTC", "SILVER_OTC"
+]
         for pair in pairs:
             markup.add(types.KeyboardButton(pair))
         markup.add(types.KeyboardButton("🔙 Главное меню"))

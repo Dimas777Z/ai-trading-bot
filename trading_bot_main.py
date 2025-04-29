@@ -40,27 +40,20 @@ def select_asset_category(message):
     user_data[message.chat.id] = {'category': message.text}
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     if message.text == "Валютные пары":
-       pairs = [
-    "EUR/USD", "GBP/USD", "USD/JPY", "EUR/JPY", "AUD/USD", "USD/CHF", "USD/CAD", "NZD/USD",
-    # Криптовалюта
-    "BTC/USD", "ETH/USD", "XRP/USD", "LTC/USD", "SOL/USD",
-    # Акции
-    "AAPL", "TSLA", "GOOGL", "MSFT", "AMZN",
-    # OTC Акции
-    "NSRGY", "BAYRY", "TCEHY", "SFTBY", "RYCEY",
-    # Индексы
-    "SP500", "NAS100", "DAX", "FTSE100", "NIKKEI225",
-    # OTC Индексы
-    "SP500_OTC", "DOW_OTC", "NASDAQ_OTC",
-    # Сырьё
-    "XAU/USD", "XAG/USD", "WTI", "BRENT", "NGAS",
-    # OTC Сырьё
-    "GOLD_OTC", "OIL_OTC", "SILVER_OTC",  # ← вот тут ставим запятую!
-]
-    
+        pairs = [
+            "EUR/USD", "GBP/USD", "USD/JPY", "EUR/JPY", "AUD/USD", "USD/CHF", "USD/CAD", "NZD/USD",
+            "BTC/USD", "ETH/USD", "XRP/USD", "LTC/USD", "SOL/USD",
+            "AAPL", "TSLA", "GOOGL", "MSFT", "AMZN",
+            "NSRGY", "BAYRY", "TCEHY", "SFTBY", "RYCEY",
+            "SP500", "NAS100", "DAX", "FTSE100", "NIKKEI225",
+            "SP500_OTC", "DOW_OTC", "NASDAQ_OTC",
+            "XAU/USD", "XAG/USD", "WTI", "BRENT", "NGAS",
+            "GOLD_OTC", "OIL_OTC", "SILVER_OTC"
+        ]
+
         for pair in pairs:
             markup.add(types.KeyboardButton(pair))
-        markup.add(types.KeyboardButton("🔙 Главное меню"))
+        markup.add(types.KeyboardButton("⬅️ Главное меню"))
         bot.send_message(message.chat.id, "Выбери валютную пару:", reply_markup=markup)
     else:
         bot.send_message(message.chat.id, "Пока доступны только валютные пары для теста.", reply_markup=markup)

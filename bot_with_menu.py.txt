@@ -1,0 +1,37 @@
+import telebot
+from telebot import types
+
+# Твой токен
+bot = telebot.TeleBot('7207526455:AAHAtsEaW3nZyn4BrbxJhDCKnlcjB3lMQwM')
+
+# Обработчик команды /start
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("📈 Получить сигнал")
+    btn2 = types.KeyboardButton("ℹ️ Помощь")
+    markup.add(btn1, btn2)
+
+    bot.send_message(
+        message.chat.id,
+        "Привет, трейдер! Я твой бот-помощник.\nВыбери, что хочешь сделать:",
+        reply_markup=markup
+    )
+
+# Обработчик текстовых сообщений
+@bot.message_handler(func=lambda message: True)
+def handle_message(message):
+    if message.text == "📈 Получить сигнал":
+        # Тут можно вставить реальный алгоритм сигналов!
+        bot.send_message(message.chat.id, "Твой сигнал: 📊 BUY EUR/USD по цене 1.0800")
+    elif message.text == "ℹ️ Помощь":
+        bot.send_message(
+            message.chat.id,
+            "Для получения сигнала нажми кнопку '📈 Получить сигнал'.\n"
+            "Я подскажу лучшие точки входа!"
+        )
+    else:
+        bot.send_message(message.chat.id, "Пожалуйста, выбери действие через кнопки ниже.")
+
+# Запуск бота
+bot.polling(none_stop=True)

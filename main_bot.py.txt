@@ -1,0 +1,33 @@
+import telebot
+import ccxt
+import ta
+import time
+
+# Укажи сюда свой токен Telegram-бота
+BOT_TOKEN = 'ВСТАВЬ_СЮДА_СВОЙ_ТОКЕН'
+bot = telebot.TeleBot(BOT_TOKEN)
+
+# Простейший старт
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Привет, брат! Я готов к анализу. Напиши /analyze")
+
+# Команда для анализа
+@bot.message_handler(commands=['analyze'])
+def analyze(message):
+    bot.reply_to(message, "Анализирую рынок...")
+
+    exchange = ccxt.binance()
+    try:
+        ohlcv = exchange.fetch_ohlcv('BTC/USDT', timeframe='1h', limit=100)
+        closes = [x[4] for x in ohlcv]
+
+        rsi = ta.momentum.RSIIndicator(pd.Series(closes)).rsi().iloc[-1]
+        bot.send_message(message.chat.id, f"RSI сейчас: {round(rsi, 2)}")
+
+        # Можно добавить больше индикаторов
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Ошибка анализа: {str(e)}")
+
+# Запуск
+bot.polling()
